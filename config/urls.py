@@ -14,9 +14,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# Import the admin module to provide the path for the Django admin site
 from django.contrib import admin
-from django.urls import path
+
+# 'path' defines individual routes; 'include' allows you to reference other urls.py files
+from django.urls import path, include
 
 urlpatterns = [
+    # Route for the admin dashboard. 
+    # Usually accessible at http://127.0.0.1:8000/admin/
     path('admin/', admin.site.urls),
+
+    # This is a "Redirector" for your app.
+    # It tells Django: "If the URL starts with 'service1/', 
+    # stop looking here and go look inside 'service1/urls.py' for the rest."
+    path('service1/', include('service1.urls')),
 ]
