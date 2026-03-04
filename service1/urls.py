@@ -18,5 +18,6 @@ urlpatterns = [
     path('', views.read_json, name='read_json'),
     # Another route for a different endpoint (http://
     path('more/', views.read_more_json, name='read_more_json'),
-    path('filter-age/', views.filter_by_age, name='filter_by_age')
+    path('filter-age/', views.filter_by_age, name='filter_by_age'),
+    path('filter-bonus/', views.filter_by_bonus, name='filter_by_bonus')
 ]

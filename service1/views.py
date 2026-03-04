@@ -70,3 +70,23 @@ def filter_by_age(request):
     # 8. Error handling: If someone tries to visit this via a browser URL (GET), 
     # return an error message.
     return JsonResponse({"error": "Only POST method allowed"}, status=405)
+
+
+@csrf_exempt
+def filter_by_bonus(request):
+    """
+    View to filter a JSON list based on a 'bonus' value sent via a GET request.
+    """
+    if request.method == "GET":
+        # bonus_to_match = request.GET.get("bonus")
+
+        file_path = os.path.join(settings.BASE_DIR, "service1", "records.json")
+
+        with open(file_path, "r") as file:
+            data = json.load(file)
+
+        filtered_data = [record for record in data if record["bonus"] >= 3000]
+
+        return JsonResponse(filtered_data, safe=False)
+
+    return JsonResponse({"error": "Only GET method allowed"}, status=405)
