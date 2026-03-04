@@ -1,12 +1,6 @@
 [
-  {
-    "id": 1,
-    "name": "Amit",
-    "city": "Mumbai"
-  },
-  {
-    "id": 2,
-    "name": "Rahul",
-    "city": "Delhi"
-  }
+  { "id": 1, "name": "Amit", "age": 29, "city": "Mumbai" },
+  { "id": 2, "name": "Rahul", "age": 34, "city": "Delhi" },
+  { "id": 3, "name": "Sneha", "age": 31, "city": "Pune" },
+  { "id": 4, "name": "Vikas", "age": 34, "city": "Chennai" }
 ]

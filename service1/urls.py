@@ -16,4 +16,7 @@ urlpatterns = [
     # It tells Django to run the 'read_json' function located in views.py.
     # The 'name' parameter allows you to refer to this URL in your HTML templates.
     path('', views.read_json, name='read_json'),
+    # Another route for a different endpoint (http://
+    path('more/', views.read_more_json, name='read_more_json'),
+    path('filter-age/', views.filter_by_age, name='filter_by_age')
 ]

@@ -2,6 +2,7 @@ import json
 import os
 from django.http import JsonResponse
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 def read_json(request):
     """
@@ -22,3 +23,50 @@ def read_json(request):
     # 'safe=False' is required because 'data' is likely a list (from your dummy data).
     # By default, JsonResponse expects a dictionary (dict).
     return JsonResponse(data, safe=False)
+
+def read_more_json(request):
+    """
+    Another view function to read a different JSON file and return its content.
+    This is just an example of how you can have multiple endpoints for different files.
+    """
+    file_path2 = os.path.join(settings.BASE_DIR, 'service1', 'records.json')
+    
+    with open(file_path2, 'r') as file:
+        data = json.load(file)
+
+    return JsonResponse(data, safe=False)
+
+
+# @csrf_exempt: This decorator allows external tools (like Postman or a frontend) 
+# to send POST requests without needing a CSRF security token. 
+# Use this cautiously in real banking apps!
+@csrf_exempt
+def filter_by_age(request):
+    """
+    View to filter a JSON list based on an 'age' sent via a POST request.
+    """
+    # 1. Check if the incoming request is a POST (sending data)
+    if request.method == "POST":
+        # 2. Parse the raw JSON body from the request into a Python dictionary
+        body = json.loads(request.body)
+        
+        # 3. Extract the 'age' value from the dictionary
+        age_to_match = body.get("age")
+ 
+        # 4. Build the absolute path to your data.json file inside 'service1' folder
+        file_path = os.path.join(settings.BASE_DIR, "service1", "data.json")
+ 
+        # 5. Open and load the local JSON file
+        with open(file_path, "r") as file:
+            data = json.load(file)
+ 
+        # 6. List Comprehension: Create a new list containing only the items 
+        # where the "age" key matches the user's input.
+        filtered_data = [record for record in data if record["age"] == age_to_match]
+ 
+        # 7. Return the filtered list as JSON. safe=False is needed for lists.
+        return JsonResponse(filtered_data, safe=False)
+ 
+    # 8. Error handling: If someone tries to visit this via a browser URL (GET), 
+    # return an error message.
+    return JsonResponse({"error": "Only POST method allowed"}, status=405)
