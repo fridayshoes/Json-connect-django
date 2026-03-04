@@ -1,0 +1,37 @@
+When you push a Django project to a repository (like GitHub), you want to avoid uploading "junk" files, sensitive credentials, or your entire virtual environment.
+
+A .gitignore file tells Git which files to ignore so your repo stays clean and secure. Create a file named .gitignore (start with a dot) in your root project directory (the same level as manage.py) and paste the following:
+
+Plaintext
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.env/
+.venv/
+venv/
+env/
+ENV/
+
+# Django sensitive files
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+.secrets
+.env
+
+# Media and Static
+/static/
+/media/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
