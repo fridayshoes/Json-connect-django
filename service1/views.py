@@ -111,3 +111,40 @@ def filter_by_bonus_and_age(request):
         return JsonResponse(filtered_data, safe=False)
 
     return JsonResponse({"error": "Only GET method allowed"}, status=405)
+
+
+@csrf_exempt
+def filter_by_age_update_bonus(request):
+    if request.method == "POST":
+        # 1. Parse the request body
+        try:
+            body = json.loads(request.body)
+            age_to_match = body.get("age")
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+        # 2. Setup file path
+        file_path = os.path.join(settings.BASE_DIR, "service1", "records.json")
+
+        # 3. Read the existing data
+        with open(file_path, "r") as file:
+            data = json.load(file)
+
+        # 4. Filter and Update Logic
+        # We create a new list for the response, but update the 'data' list in place for the file
+        filtered_data = []
+        for record in data:
+            if record.get("age", 0) >= age_to_match:
+                # Update the bonus in the main data list
+                record["bonus"] = record.get("bonus", 0) + 10000
+                # Add this specific record to our "results" list
+                filtered_data.append(record)
+
+        # 5. Write the UPDATED data back to the file
+        with open(file_path, "w") as file:
+            json.dump(data, file, indent=4)
+
+        # 6. Return the records that were updated
+        return JsonResponse(filtered_data, safe=False)
+
+    return JsonResponse({"error": "Only POST method allowed"}, status=405)
