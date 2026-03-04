@@ -19,5 +19,6 @@ urlpatterns = [
     # Another route for a different endpoint (http://
     path('more/', views.read_more_json, name='read_more_json'),
     path('filter-age/', views.filter_by_age, name='filter_by_age'),
-    path('filter-bonus/', views.filter_by_bonus, name='filter_by_bonus')
+    path('filter-bonus/', views.filter_by_bonus, name='filter_by_bonus'),
+    path('filter-bonus-age/', views.filter_by_bonus_and_age, name='filter_by_bonus_and_age')
 ]

@@ -30,3 +30,5 @@ Displays data from data.json at http://127.0.0.1:8000/service1/filter-age/
 ```
 
 Displays only records with bonus 3000 or above http://127.0.0.1:8000/service1/filter-bonus/ - only GET method allowed
+
+Displays only records with bonus 3000 and above and age 34 127.0.0.1:8000/service1/filter-bonus-age/ - only GET method allowed

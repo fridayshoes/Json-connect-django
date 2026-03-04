@@ -90,3 +90,24 @@ def filter_by_bonus(request):
         return JsonResponse(filtered_data, safe=False)
 
     return JsonResponse({"error": "Only GET method allowed"}, status=405)
+
+
+@csrf_exempt
+def filter_by_bonus_and_age(request):
+    if request.method == "GET":
+        # bonus_to_match = request.GET.get("bonus")
+        # age_to_match = request.GET.get("age")
+
+        file_path = os.path.join(settings.BASE_DIR, "service1", "records.json")
+
+        with open(file_path, "r") as file:
+            data = json.load(file)
+
+        filtered_data = [
+            record for record in data 
+            if record["bonus"] >= 3000 and record["age"] == 34
+        ]
+
+        return JsonResponse(filtered_data, safe=False)
+
+    return JsonResponse({"error": "Only GET method allowed"}, status=405)
